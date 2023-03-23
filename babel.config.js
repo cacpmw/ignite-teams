@@ -4,6 +4,12 @@ module.exports = function(api) {
     presets: ['babel-preset-expo'],
     plugins: [
       [
+        "babel-plugin-styled-components",
+        {
+          "ssr": false
+        }
+      ],
+      [
         'module-resolver',
         {
           root: ['./src'],
