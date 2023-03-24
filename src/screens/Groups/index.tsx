@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { FlatList } from 'react-native';
 import { Container } from './styles';
 import { ListEmpty } from '@components/ListEmpty';
+import { Button } from '@components/Button';
 
 
 export default function Groups() {
@@ -31,6 +32,7 @@ export default function Groups() {
       contentContainerStyle={groups.length ===0 &&{flex: 1}}
       ListEmptyComponent={<ListEmpty message='Nenhuma turma' />}
     />
+    <Button text='Nova turma'/>
     </Container>
   );
 }
