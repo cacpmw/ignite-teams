@@ -16,6 +16,7 @@ background-color: ${({ theme, type }) => (type === "PRIMARY" ? theme.COLORS.GREE
 border-radius: 6px;
 justify-content: center;
 align-items: center;
+margin-top:10px;
 `;
 
 export const Title = styled.Text`
