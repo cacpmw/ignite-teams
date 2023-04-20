@@ -1,18 +1,18 @@
 import { Container, Subtitle, Title } from "./styles";
 
-interface HighlightProps{
+interface HighlightProps {
     title: string;
     subtitle: string;
 }
-export function Highlight({title, subtitle}:HighlightProps){
+export function Highlight({ title, subtitle }: HighlightProps) {
 
-    return(
+    return (
         <Container>
             <Title>
-        {title}
+                {title}
             </Title>
             <Subtitle>
-            {subtitle}
+                {subtitle}
             </Subtitle>
         </Container>
     )
