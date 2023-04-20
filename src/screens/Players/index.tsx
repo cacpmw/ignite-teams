@@ -10,15 +10,20 @@ import { HeaderList, NumberOfPlayers } from "@components/Filter/styles";
 import { PlayerCard } from "@components/PlayerCard";
 import { ListEmpty } from "@components/ListEmpty";
 import { Button } from "@components/Button";
-
+import { useRoute } from "@react-navigation/native";
+ interface RouteParameters{
+   group: string;
+ }
 
 export default function Players() {
     const [team, setTeam] = useState("Time A")
     const [players, setPlayers] = useState([]);
+    const route = useRoute();
+    const { group } = route.params as RouteParameters;
     return (
         <Container>
             <Header showBackButton />
-            <Highlight title="Nome do grupo" subtitle="Adicione a galera e separe os times" />
+            <Highlight title={group} subtitle="Adicione a galera e separe os times" />
             <Form>
                 <Input placeholder="Nome da pessoa" autoCorrect={false} />
                 <ButtonIcon icon="add" />
@@ -39,19 +44,19 @@ export default function Players() {
                 <NumberOfPlayers>{players.length}</NumberOfPlayers>
             </HeaderList>
             <FlatList data={players}
-            keyExtractor={item => item}
-            renderItem={({item})=>(
-                <PlayerCard name={item}/>
-            )}
-            ListEmptyComponent={<ListEmpty message='Nenhum jogador' />}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
-                { paddingBottom: 100 },
-                players.length===0 && {flex:1}
-            ]}
+                keyExtractor={item => item}
+                renderItem={({ item }) => (
+                    <PlayerCard name={item} />
+                )}
+                ListEmptyComponent={<ListEmpty message='Nenhum jogador' />}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={[
+                    { paddingBottom: 100 },
+                    players.length === 0 && { flex: 1 }
+                ]}
 
             />
-            <Button text="Remover Turma" type="SECONDARY"/>
+            <Button text="Remover Turma" type="SECONDARY" />
 
 
         </Container>
