@@ -24,6 +24,9 @@
       ],
       "@utils/*": [
         "./src/utils/*"
+      ],
+      "@exceptions/*": [
+        "./src/exceptions/*"
       ]
     }
   }

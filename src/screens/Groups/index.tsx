@@ -1,21 +1,37 @@
 import { GroupCard } from '@components/GroupCard';
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { Container } from './styles';
 import { ListEmpty } from '@components/ListEmpty';
 import { Button } from '@components/Button';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { all as getGroupsFromLocalStorage } from '@storage/group/groupStorage';
 
 
 export default function Groups() {
   const [groups, setGroups] = useState<string[]>([]);
   const navigation = useNavigation();
 
-  function handleNewGroup(){
+  function handleNewGroup() {
     navigation.navigate("new");
   }
+  async function getGroupsFromStorage() {
+    try {
+      const data = await getGroupsFromLocalStorage();
+      setGroups(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  /**This hook executes every time a screen
+   * refocus
+   */
+  useFocusEffect(useCallback(() => {
+    console.log("useFocusEffect");
+    getGroupsFromStorage();
+  }, []));
   return (
 
     <Container>
