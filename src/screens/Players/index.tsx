@@ -18,11 +18,13 @@ import {
     removePlayerByGroupFromLocalStorage
 } from "@storage/players/playersStorage";
 import { removeGroupByNameFromLocalStorage } from "@storage/group/groupStorage";
+import { Loading } from "@components/Loading";
 interface RouteParameters {
     group: string;
 }
 
 export default function Players() {
+    const [isLoading, setIsLoading] = useState(true);
     const [newPlayerName, setNewPlayerName] = useState("");
     const [team, setTeam] = useState("Time A")
     const [players, setPlayers] = useState<{ name: string; team: string }[]>([]);
@@ -55,13 +57,16 @@ export default function Players() {
     }
     async function getPlayersByTeam() {
         try {
+            setIsLoading(true);
             const playersByTeam = await getPlayersByGroupAndTeamFromLocalStorage(group, team);
-            setPlayers(playersByTeam)
+            setPlayers(playersByTeam);
         } catch (error) {
             if (error instanceof AppError) {
                 Alert.alert("Players", "Unable to load players");
                 console.log(error);
             }
+        } finally {
+            setIsLoading(false);
         }
     }
     async function handlePlayerRemove(playerName: string) {
@@ -108,12 +113,12 @@ export default function Players() {
     return (
         <Container>
             <Header showBackButton />
-            <Highlight title={group} subtitle="Adicione a galera e separe os times" />
+            <Highlight title={group} subtitle="Separate your mates by teams" />
             <Form>
                 <Input
                     inputRef={newPlayerNameInputRef}
                     onChangeText={setNewPlayerName}
-                    placeholder="Nome da pessoa"
+                    placeholder="Player name"
                     autoCorrect={false}
                     value={newPlayerName}
                     onSubmitEditing={handleAddPlayer}
@@ -136,24 +141,28 @@ export default function Players() {
                 />
                 <NumberOfPlayers>{players.length}</NumberOfPlayers>
             </HeaderList>
-            <FlatList data={players}
-                keyExtractor={item => item.name}
-                renderItem={({ item }) => (
-                    <PlayerCard
-                        name={item.name}
-                        onRemove={() => handlePlayerRemove(item.name)}
-                    />
-                )}
-                ListEmptyComponent={<ListEmpty message='Nenhum jogador' />}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={[
-                    { paddingBottom: 100 },
-                    players.length === 0 && { flex: 1 }
-                ]}
+            {
+                isLoading ? <Loading /> :
 
-            />
+                    <FlatList data={players}
+                        keyExtractor={item => item.name}
+                        renderItem={({ item }) => (
+                            <PlayerCard
+                                name={item.name}
+                                onRemove={() => handlePlayerRemove(item.name)}
+                            />
+                        )}
+                        ListEmptyComponent={<ListEmpty message='No players' />}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={[
+                            { paddingBottom: 100 },
+                            players.length === 0 && { flex: 1 }
+                        ]}
+
+                    />
+            }
             <Button
-                text="Remover Turma"
+                text="Remove Group"
                 type="SECONDARY"
                 onPress={handleGroupRemove}
             />
