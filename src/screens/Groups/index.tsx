@@ -33,7 +33,7 @@ export default function Groups() {
    * refocus
    */
   useFocusEffect(useCallback(() => {
-    console.log("useFocusEffect");
+    console.log("Groups Screen: useFocusEffect");
     getGroupsFromStorage();
   }, []));
   return (

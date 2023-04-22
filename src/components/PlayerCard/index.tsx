@@ -3,7 +3,7 @@ import { Container, Name, Icon } from "./styles";
 
 interface PlayerCardComponentProps {
     name:string;
-    onRemove?: ()=>{};
+    onRemove?: ()=>void;
 }
 
 export function PlayerCard({name, onRemove}: PlayerCardComponentProps){
@@ -13,7 +13,7 @@ export function PlayerCard({name, onRemove}: PlayerCardComponentProps){
             <Name>
                 {name}
             </Name>
-            <ButtonIcon icon="close" type="SECONDARY" onPress={()=>{}} />
+            <ButtonIcon icon="close" type="SECONDARY" onPress={onRemove} />
         </Container>
     );
 }
