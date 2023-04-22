@@ -69,7 +69,6 @@ export default function Groups() {
           />
       }
       <Button
-        aria-disabled
         text='New Group'
         onPress={handleNewGroup}
       />

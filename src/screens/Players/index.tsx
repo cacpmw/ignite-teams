@@ -26,7 +26,7 @@ interface RouteParameters {
 export default function Players() {
     const [isLoading, setIsLoading] = useState(true);
     const [newPlayerName, setNewPlayerName] = useState("");
-    const [team, setTeam] = useState("Time A")
+    const [team, setTeam] = useState("Team A")
     const [players, setPlayers] = useState<{ name: string; team: string }[]>([]);
     const navigation = useNavigation();
     const route = useRoute();
@@ -129,7 +129,7 @@ export default function Players() {
             <HeaderList>
                 <FlatList
                     horizontal
-                    data={["Time A", "Time B"]}
+                    data={["Team A", "Team B"]}
                     keyExtractor={item => item}
                     renderItem={({ item }) => (
                         <Filter
