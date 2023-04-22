@@ -10,13 +10,14 @@ import { HeaderList, NumberOfPlayers } from "@components/Filter/styles";
 import { PlayerCard } from "@components/PlayerCard";
 import { ListEmpty } from "@components/ListEmpty";
 import { Button } from "@components/Button";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { AppError } from "@exceptions/AppError";
 import {
     createPlayerByGroupOnLocalStorage,
     getPlayersByGroupAndTeamFromLocalStorage,
     removePlayerByGroupFromLocalStorage
 } from "@storage/players/playersStorage";
+import { removeGroupByNameFromLocalStorage } from "@storage/group/groupStorage";
 interface RouteParameters {
     group: string;
 }
@@ -25,6 +26,7 @@ export default function Players() {
     const [newPlayerName, setNewPlayerName] = useState("");
     const [team, setTeam] = useState("Time A")
     const [players, setPlayers] = useState<{ name: string; team: string }[]>([]);
+    const navigation = useNavigation();
     const route = useRoute();
     const { group } = route.params as RouteParameters;
     const newPlayerNameInputRef = useRef<TextInput>(null);
@@ -74,6 +76,28 @@ export default function Players() {
                 console.log(error);
             }
         }
+    }
+    async function removeGroup() {
+        try {
+            await removeGroupByNameFromLocalStorage(group);
+            navigation.navigate("groups");
+        } catch (error) {
+            if (error instanceof AppError) {
+                Alert.alert("Players", "Unable to remove group");
+                console.log(error);
+            }
+        }
+    }
+    async function handleGroupRemove() {
+        Alert.alert(
+            "Remove group",
+            "Are you sure?",
+            [
+                { text: "Yes", onPress: () => { removeGroup() } },
+                { text: "No", style: "cancel" }
+            ]
+        );
+        ;
     }
     /**updates players list every time a new player is added */
     useEffect(() => {
@@ -128,7 +152,11 @@ export default function Players() {
                 ]}
 
             />
-            <Button text="Remover Turma" type="SECONDARY" />
+            <Button
+                text="Remover Turma"
+                type="SECONDARY"
+                onPress={handleGroupRemove}
+            />
 
 
         </Container>

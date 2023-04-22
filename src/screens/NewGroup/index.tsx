@@ -5,7 +5,7 @@ import Input from "@components/Input";
 import { Container, Content, Icon } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { create as storeGroupOnLocalStorage } from "@storage/group/groupStorage";
+import { storeGroupOnLocalStorage } from "@storage/group/groupStorage";
 import { AppError } from "@exceptions/AppError";
 import { Alert } from "react-native";
 

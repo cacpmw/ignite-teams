@@ -52,3 +52,11 @@ export async function removePlayerByGroupFromLocalStorage(playerName: string, gr
 
     }
 }
+export async function removeAllPlayersByGroupFromLocalStorage(group:string): Promise<void>{
+    try {
+        await AsyncStorage.removeItem(`${PLAYER_COLLECTION}-${group}`);
+    } catch (error) {
+
+    }
+
+}

@@ -7,7 +7,7 @@ import { Container } from './styles';
 import { ListEmpty } from '@components/ListEmpty';
 import { Button } from '@components/Button';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { all as getGroupsFromLocalStorage } from '@storage/group/groupStorage';
+import { getGroupsFromLocalStorage } from '@storage/group/groupStorage';
 
 
 export default function Groups() {
